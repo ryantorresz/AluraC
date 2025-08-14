@@ -1,11 +1,19 @@
 #include <stdio.h>
 
 int main() {
-    printf("*****************************\n");
-    printf("Bem vindo ao nosso jogo de adivinhação\n");
-    printf("*****************************\n");
+    int numeroSecreto = 42;  // Número a ser adivinhado
+    int chute;
 
-    int numeroSecreto = 42;
+    printf("Adivinhe o número secreto (1-100): ");
+    scanf("%d", &chute);
 
-    printf("Qual é o número secreto?\n");
+    printf("Você chutou: %d\n", chute);
+
+    if (chute == numeroSecreto) {
+        printf("Parabéns! Acertou!\n");
+    } else {
+        printf("Errou! O número era %d\n", numeroSecreto);
+    }
+
+    return 0;
 }
