@@ -21,7 +21,7 @@ int main() {
             if (scanf("%d", &chute) != 1) {
                 printf("Entrada inválida! Digite um número: ");
                 while (getchar() != '\n'); // Limpa buffer do teclado
-                continue;
+                continue; 
             }
             if (chute < 1 || chute > 100) {
                 printf("Número deve ser entre 1 e 100. Tente novamente: ");
