@@ -127,7 +127,16 @@ int main() {
     srand(time(0)); // Inicializa o gerador de números aleatórios
 
     lemapa(&m);
-    encontramapa(&m, &heroi, HEROI);
+
+    // TESTE: Verifica se o mapa foi carregado corretamente
+    printf("=== TESTE: MAPA CARREGADO ===\n");
+    imprimemapa(&m);
+
+    if (!encontramapa(&m, &heroi, HEROI)) {
+        printf("Erro: herói não encontrado no mapa!\n");
+        liberamapa(&m);
+        return 1;
+    }
 
     do {
         printf("Pílula: %s\n", (tempilula ? "SIM" : "NÃO"));
