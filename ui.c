@@ -1,73 +1,73 @@
 #include <stdio.h>
 #include "mapa.h"
 
-char desenhoparede[4][7] = {
-	{"......" },
-	{"......" },
-	{"......" },
-	{"......" }
+// Constantes para dimensões dos desenhos
+#define ALTURA_DESENHO 4
+#define LARGURA_DESENHO 7
+
+// Desenhos dos elementos do jogo
+char desenhoparede[ALTURA_DESENHO][LARGURA_DESENHO] = {
+    {"......"},
+    {"......"},
+    {"......"},
+    {"......"}
 };
 
-char desenhofantasma[4][7] = {
-	{" .-.  " },
-	{"| OO| " },
-	{"|   | " },
-	{"'^^^' " }
+char desenhofantasma[ALTURA_DESENHO][LARGURA_DESENHO] = {
+    {" .-.  "},
+    {"| OO| "},
+    {"|   | "},
+    {"'^^^' "}
 };
 
-char desenhoheroi[4][7] = {
-	{" .--. "  },
-	{"/ _.-'"  },
-	{"\\  '-." },
-	{" '--' "  }
+char desenhoheroi[ALTURA_DESENHO][LARGURA_DESENHO] = {
+    {" .--. "},
+    {"/ _.-'"},
+    {"\\  '-."},
+    {" '--' "}
 };
 
-char desenhopilula[4][7] = {
-	{"      "},
-	{" .-.  "},
-	{" '-'  "},
-	{"      "}
+char desenhopilula[ALTURA_DESENHO][LARGURA_DESENHO] = {
+    {"      "},
+    {" .-.  "},
+    {" '-'  "},
+    {"      "}
 };
 
-char desenhovazio[4][7] = {
-	{"      "},
-	{"      "},
-	{"      "},
-	{"      "}
+char desenhovazio[ALTURA_DESENHO][LARGURA_DESENHO] = {
+    {"      "},
+    {"      "},
+    {"      "},
+    {"      "}
 };
 
-void imprimeparte(char desenho[4][7], int parte) {
-	printf("%s", desenho[parte]);
+// Função auxiliar para obter o desenho correto
+char (*obtemdesenho(char elemento))[LARGURA_DESENHO] {
+    switch(elemento) {
+        case FANTASMA:           return desenhofantasma;
+        case HEROI:              return desenhoheroi;
+        case PILULA:             return desenhopilula;
+        case PAREDE_VERTICAL:
+        case PAREDE_HORIZONTAL:  return desenhoparede;
+        case VAZIO:
+        default:                 return desenhovazio;
+    }
 }
 
+// Imprime uma parte do desenho
+void imprimeparte(char desenho[ALTURA_DESENHO][LARGURA_DESENHO], int parte) {
+    printf("%s", desenho[parte]);
+}
+
+// Imprime o mapa inteiro com desenhos
 void imprimemapa(MAPA* m) {
-	for(int i = 0; i < m->linhas; i++) {
-
-		for(int parte = 0; parte < 4; parte++) {
-			for(int j = 0; j < m->colunas; j++) {
-
-				switch(m->matriz[i][j]) {
-					case FANTASMA:
-						imprimeparte(desenhofantasma, parte);
-						break;
-					case HEROI:
-						imprimeparte(desenhoheroi, parte);
-						break;
-					case PILULA:
-						imprimeparte(desenhopilula, parte);
-						break;
-					case PAREDE_VERTICAL:
-					case PAREDE_HORIZONTAL:
-						imprimeparte(desenhoparede, parte);
-						break;
-					case VAZIO:
-						imprimeparte(desenhovazio, parte);
-						break;
-				}
-				
-			}
-			printf("\n");
-		}
-
-	}
+    for(int i = 0; i < m->linhas; i++) {
+        for(int parte = 0; parte < ALTURA_DESENHO; parte++) {
+            for(int j = 0; j < m->colunas; j++) {
+                char elemento = m->matriz[i][j];
+                imprimeparte(obtemdesenho(elemento), parte);
+            }
+            printf("\n");
+        }
+    }
 }
